@@ -1,6 +1,6 @@
 using System;
 
-namespace temp_ng_core
+namespace DammyWrot
 {
     public class WeatherForecast
     {

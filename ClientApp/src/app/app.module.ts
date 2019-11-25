@@ -54,7 +54,8 @@ import { AdvertisingSectionComponent } from './advertising-section/advertising-s
 import { BusinessServicesSectionComponent } from './business-services-section/business-services-section.component';
 import { MoreSectionComponent } from './more-section/more-section.component';
 import { GetAppSectionComponent } from './get-app-section/get-app-section.component';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatButtonModule} from '@angular/material'
 @NgModule({
   declarations: [
     AppComponent,
@@ -153,7 +154,9 @@ import { GetAppSectionComponent } from './get-app-section/get-app-section.compon
         { path: 'business-services', component: BusinessServicesSectionComponent},
         { path: 'get-app', component: GetAppSectionComponent},
         { path: 'more', component: MoreSectionComponent},
-    ])
+    ]),
+      BrowserAnimationsModule,
+      MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

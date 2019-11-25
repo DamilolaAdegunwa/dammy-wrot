@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace temp_ng_core.Controllers
+namespace DammyWrot.Controllers
 {
     [ApiController]
     [Route("[controller]")]
