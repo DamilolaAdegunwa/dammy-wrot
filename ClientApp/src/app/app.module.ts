@@ -31,7 +31,7 @@ import { MessagesSectionComponent } from './messages-section/messages-section.co
 import { BookmarksSectionComponent } from './bookmarks-section/bookmarks-section.component';
 import { TopicsSectionComponent } from './topics-section/topics-section.component';
 import { MomentsSectionComponent } from './moments-section/moments-section.component';
-import { TwitterAdsSectionComponent } from './twitter-ads-section/twitter-ads-section.component';
+import { DammyWrotAdsSectionComponent } from './dammy-wrot-ads-section/dammy-wrot-ads-section.component';
 import { AnalyticsSectionComponent } from './analytics-section/analytics-section.component';
 import { SettingsSectionComponent } from './settings-section/settings-section.component';
 import { HelpCenterSectionComponent } from './help-center-section/help-center-section.component';
@@ -85,7 +85,7 @@ import {MatButtonModule} from '@angular/material'
         BookmarksSectionComponent,
         TopicsSectionComponent,
         MomentsSectionComponent,
-        TwitterAdsSectionComponent,
+        DammyWrotAdsSectionComponent,
         AnalyticsSectionComponent,
         SettingsSectionComponent,
         HelpCenterSectionComponent,
@@ -132,7 +132,7 @@ import {MatButtonModule} from '@angular/material'
         { path: 'bookmarks', component: BookmarksSectionComponent},
         { path: 'topics', component: TopicsSectionComponent},
         { path: 'moments', component: MomentsSectionComponent},
-        { path: 'twitter-ads', component: TwitterAdsSectionComponent},
+        { path: 'dammy-wrot-ads', component: DammyWrotAdsSectionComponent},
         { path: 'analytics', component: AnalyticsSectionComponent},
         { path: 'settings', component: SettingsSectionComponent},
         { path: 'help-center', component: HelpCenterSectionComponent},
