@@ -45,6 +45,15 @@ import { ChatSectionComponent } from './chat-section/chat-section.component';
 import { AccountSectionComponent } from './account-section/account-section.component';
 import { FeedbackSectionComponent } from './feedback-section/feedback-section.component';
 import { FooterSectionComponent } from './footer-section/footer-section.component';
+import { AboutSectionComponent } from './about-section/about-section.component';
+import { CookiesSectionComponent } from './cookies-section/cookies-section.component';
+import { PrivacySectionComponent } from './privacy-section/privacy-section.component';
+import { PolicySectionComponent } from './policy-section/policy-section.component';
+import { AdChoicesSectionComponent } from './ad-choices-section/ad-choices-section.component';
+import { AdvertisingSectionComponent } from './advertising-section/advertising-section.component';
+import { BusinessServicesSectionComponent } from './business-services-section/business-services-section.component';
+import { MoreSectionComponent } from './more-section/more-section.component';
+import { GetAppSectionComponent } from './get-app-section/get-app-section.component';
 
 @NgModule({
   declarations: [
@@ -89,6 +98,15 @@ import { FooterSectionComponent } from './footer-section/footer-section.componen
         AccountSectionComponent,
         FeedbackSectionComponent,
         FooterSectionComponent,
+        AboutSectionComponent,
+        CookiesSectionComponent,
+        PrivacySectionComponent,
+        PolicySectionComponent,
+        AdChoicesSectionComponent,
+        AdvertisingSectionComponent,
+        BusinessServicesSectionComponent,
+        GetAppSectionComponent,
+        MoreSectionComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -126,6 +144,15 @@ import { FooterSectionComponent } from './footer-section/footer-section.componen
         { path: 'chat', component: ChatSectionComponent},
         { path: 'account', component: AccountSectionComponent},
         { path: 'feedback', component: FeedbackSectionComponent},
+        { path: 'about', component: AboutSectionComponent},
+        { path: 'cookies', component: CookiesSectionComponent},
+        { path: 'privacy', component: PrivacySectionComponent},
+        { path: 'policy', component: PolicySectionComponent},
+        { path: 'ad-choices', component: AdChoicesSectionComponent},
+        { path: 'advertising', component: AdvertisingSectionComponent},
+        { path: 'business-services', component: BusinessServicesSectionComponent},
+        { path: 'get-app', component: GetAppSectionComponent},
+        { path: 'more', component: MoreSectionComponent},
     ])
   ],
   providers: [],
