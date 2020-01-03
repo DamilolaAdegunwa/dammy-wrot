@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DammyWrot.Service.AuthenticationService
+namespace DammyWrot.Service.Authentication
 {
     public interface IUserValidationService
     {

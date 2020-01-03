@@ -9,7 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using DammyWrot.Core.Model;
 using DammyWrot.Repository.Entity;
 
-namespace DammyWrot.Service.AuthenticationService
+namespace DammyWrot.Service.Authentication
 {
     public class UserValidationService : IUserValidationService
     {

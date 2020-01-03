@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DammyWrot.Core.Model;
 using DammyWrot.Repository.Entity;
-using DammyWrot.Service.AuthenticationService;
+using DammyWrot.Service.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
