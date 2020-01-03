@@ -1,9 +1,15 @@
+using DammyWrot.Core.Model;
+using DammyWrot.Repository.Context;
+using DammyWrot.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Configuration;
+using System.IO;
 
 namespace DammyWrot
 {
@@ -12,6 +18,12 @@ namespace DammyWrot
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                //.AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+                .AddEnvironmentVariables();
+            Configuration = builder.Build();
         }
 
         public IConfiguration Configuration { get; }
@@ -25,6 +37,11 @@ namespace DammyWrot
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+            services.AddSingleton(p => Configuration);
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+            services.AddDbContext<AppDbContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("DammyWrotDB")));
+            services.AddDammyWrotServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
