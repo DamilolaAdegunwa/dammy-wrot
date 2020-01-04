@@ -4,7 +4,7 @@ using System.Text;
 using DammyWrot.Service.Authentication;
 using Microsoft.Extensions.DependencyInjection;
 using DammyWrot.Service.Security;
-using Array.ApplicationServices.EntityServices;
+using DammyWrot.Service.EntityServices;
 using DammyWrot.Repository;
 
 namespace DammyWrot.Service

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using DammyWrot.Repository.Entity;
 using DammyWrot.Repository.PersistenceLogic;
 using Microsoft.Extensions.Logging;
-namespace Array.ApplicationServices.EntityServices
+namespace DammyWrot.Service.EntityServices
 {
     public class UserService : IUserService
     {

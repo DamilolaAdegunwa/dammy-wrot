@@ -8,49 +8,85 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using DammyWrot.Core.Model;
 using DammyWrot.Repository.Entity;
+using DammyWrot.Service.EntityServices;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace DammyWrot.Service.Authentication
 {
     public class UserValidationService : IUserValidationService
     {
-        List<User> users;
-        AppSettings key;
-
-        public UserValidationService(IOptions<AppSettings> appSettings)
+        #region fields
+        private readonly AppSettings _appSettings;
+        private readonly IUserService _userService;
+        private readonly ILogger<UserValidationService> _logger;
+        #endregion
+        public UserValidationService(IOptions<AppSettings> appSettings, IUserService userService, ILogger<UserValidationService> logger)
         {
-            this.key = appSettings.Value;
-            
-            //this.users = new List<UserEntity>
-            //{
-            //    new UserEntity { Id = 1, FirstName = "Sachin", LastName = "Tendulkar", Email = "sachin@gmail.com",Username = "sachin", Password = "password" },
-            //    new UserEntity { Id = 2, FirstName = "Dorthy", LastName = "dulkar", Email = "dorthy@gmail.com",Username = "dorthy", Password = "password" },
-            //    new UserEntity { Id = 3, FirstName = "Sarah", LastName = "Babadus", Email = "sarah.babadus@gmail.com",Username = "Sarah", Password = "password" },
-            //    new UserEntity { Id = 4, FirstName = "Femi", LastName = "Fitman", Email = "femi.fit@gmail.com",Username = "femi", Password = "password" },
-            //    new UserEntity { Id = 5, FirstName = "George", LastName = "Brown", Email = "g.brown@gmail.com",Username = "brown", Password = "password" },
-            //};
+            this._appSettings = appSettings.Value;
+            this._userService = userService;
+            this._logger = logger;
         }
-
-        public User IsValidate(string username, string password)
+        public async Task<string> GetToken(long Id)
         {
-            var user = users.SingleOrDefault(x => x.Email?.ToLower() == username?.ToLower() && x.Password == password);
-            if (user == null)
+            try
             {
-                return null;
-            }
-            var key = Encoding.ASCII.GetBytes(this.key.SecretKey);
-            var jwtToken = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new Claim[]
+                var userCheck = (await _userService.Get(u => u.Id == Id))?.FirstOrDefault<User>();
+                if (userCheck == null)
                 {
-                    new Claim(ClaimTypes.Name, user.Id.ToString())
-                }),
-                Expires = DateTime.UtcNow.AddDays(10),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var token = tokenHandler.CreateToken(jwtToken);
-            user.Token = tokenHandler.WriteToken(token);
-            return user;
+                    return null;
+                }
+                var key = Encoding.ASCII.GetBytes(this._appSettings.SecretKey);
+                var jwtToken = new SecurityTokenDescriptor
+                {
+                    Subject = new ClaimsIdentity(new Claim[]
+                    {
+                    new Claim(ClaimTypes.Name, Id.ToString())
+                    }),
+                    Expires = DateTime.UtcNow.AddDays(10),//hardcode alert!!
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                };
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var token = tokenHandler.CreateToken(jwtToken);
+                return _ = tokenHandler.WriteToken(token);
+                
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public async Task<string> GetToken(string email, string password)
+        {
+            try
+            {
+                var user = (await _userService.Get(u=> u.Email == email && u.Password == password))?.FirstOrDefault<User>();
+                if (user == null)
+                {
+                    return null;
+                }
+                return await GetToken(user.Id);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public async Task<string> GetToken(User user)
+        {
+            try
+            {
+                var userCheck = (await _userService.Get(u => u.Id == user.Id))?.FirstOrDefault<User>();
+                if (userCheck == null)
+                {
+                    return null;
+                }
+                return await GetToken(userCheck.Id);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

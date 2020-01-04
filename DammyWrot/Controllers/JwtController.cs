@@ -25,40 +25,17 @@ namespace DammyWrot.Controllers
             _logger = logger;
             _uservalidationService = uservalidationService;
             _appSettings = options.Value;
-            var testVal = _appSettings.SecretKey;
         }
         [AllowAnonymous]
         [HttpPost("token")]
-        public IActionResult Authenticate([FromBody]User model)
+        public async Task<IActionResult> Authenticate([FromBody]User model)
         {
-            var user = this._uservalidationService.IsValidate(model.Email, model.Password);
-            if (user == null)
+            var token = this._uservalidationService.GetToken(model.Email, model.Password);
+            if (token == null)
             {
-                return BadRequest(new { message = "UserName or Password is invalid" });
+                return BadRequest();
             }
-            return Ok(user);
-        }
-
-        [AllowAnonymous]
-        [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] User model)
-        {
-            try
-            {
-                var user = this._uservalidationService.IsValidate(model.Email, model.Password);
-                if (user != null)
-                {
-                    return BadRequest(new { message = "Email Already Exist", status = 1 });
-                }
-                /*
-                 other checks would include valid password requirement, valid email format
-                 */
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
-            }
+            return Ok(token);
         }
     }
 }

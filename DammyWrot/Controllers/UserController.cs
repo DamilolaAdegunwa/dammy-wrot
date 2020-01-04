@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Array.ApplicationServices.EntityServices;
+using DammyWrot.Service.EntityServices;
 using DammyWrot.Core.Model;
 using DammyWrot.Repository.Entity;
 using Microsoft.AspNetCore.Http;
@@ -36,7 +37,24 @@ namespace DammyWrot.Controllers
             try
             {
                 model.Id = 0;
+                //validate email regex, required and uniqueness
+                var wellFormattedEmail = Regex.IsMatch(model.Email, @"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$");
+                if (!wellFormattedEmail) return BadRequest("Please input a valid email!!");
+                if (string.IsNullOrEmpty(model.Email?.Trim())) return BadRequest("Email is required!!");
+                if ((await _userService.Get(u => u.Email == model.Email)).Count() > 0) return BadRequest("User with this email already exist. If this is you, login instead!");
+
+                //validate password for regex and required
+                var wellFormattedPassword = Regex.IsMatch(model.Password, @"(?=^.{8,15}$)(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?!.*\s).*$");
+                if (!wellFormattedPassword) return BadRequest("Invalid password format!!");
+                if (string.IsNullOrEmpty(model.Password?.Trim())) return BadRequest("Password is required!");
+
+                //validate name for required and length
+                if (string.IsNullOrEmpty(model.Name?.Trim()) || model.Name.Length <= 2) return BadRequest("Invalid Name given!");
+
+                //Create a new user in the database
                 _userService.Create(model);
+
+
                 return await Task.FromResult(Ok("success connecting!!"));
             }
             catch (Exception ex)

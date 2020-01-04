@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 using DammyWrot.Repository.Context;
-
+using System.Collections;
 namespace DammyWrot.Repository.PersistenceLogic.Base
 {
     public class BaseRepository : IBaseRepository
@@ -21,8 +21,8 @@ namespace DammyWrot.Repository.PersistenceLogic.Base
         {
             try
             {
-                _db.Add(model);
-                _db.SaveChanges();
+                var v =_db.Add(model);
+                _ = _db.SaveChanges();
                 return Task.CompletedTask;
             }
             catch (Exception ex)
@@ -34,7 +34,7 @@ namespace DammyWrot.Repository.PersistenceLogic.Base
         {
             try
             {
-                var resp = _db.Find<IEnumerable<T>>(predicate);//This can just as well be casted to type T for a test
+                var resp = _db.Set<T>().Where(predicate);
                 return Task.FromResult(resp);
             }
             catch (Exception ex)
@@ -62,8 +62,8 @@ namespace DammyWrot.Repository.PersistenceLogic.Base
         {
             try
             {
-                var resp = _db.Find<IEnumerable<T>>();//This can just as well be casted to type T for a test
-                return Task.FromResult(resp);
+                var resp = _db.Set<T>().ToList();
+                return Task.FromResult((IEnumerable<T>)resp);
             }
             catch (Exception ex)
             {
