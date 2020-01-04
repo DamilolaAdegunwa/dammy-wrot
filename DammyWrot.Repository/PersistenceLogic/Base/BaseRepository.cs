@@ -22,6 +22,7 @@ namespace DammyWrot.Repository.PersistenceLogic.Base
             try
             {
                 _db.Add(model);
+                _db.SaveChanges();
                 return Task.CompletedTask;
             }
             catch (Exception ex)
@@ -85,7 +86,9 @@ namespace DammyWrot.Repository.PersistenceLogic.Base
         {
             try
             {
-                return _ = Task.FromResult(_db.Update(model));
+                _ = _db.Update(model);
+                _db.SaveChanges();
+                return Task.CompletedTask;
             }
             catch (Exception ex)
             {
@@ -96,7 +99,9 @@ namespace DammyWrot.Repository.PersistenceLogic.Base
         {
             try
             {
-                return _ = Task.FromResult(_db.Remove(model));
+                _ = _db.Remove(model);
+                _db.SaveChanges();
+                return Task.CompletedTask;
             }
             catch (Exception ex)
             {
@@ -109,10 +114,6 @@ namespace DammyWrot.Repository.PersistenceLogic.Base
             {
                 var count = (await Get<T>(predicate)).ToList<T>().Count;
                 var resp = await Task.FromResult(count);
-                //Task => return Task.CompletedTask
-                //Task<T> => Task.FromResult(t)
-                //async Task =>  (awaitable)
-                //async Task<T> => (awaitable) t
                 return resp;
             }
             catch (Exception ex)

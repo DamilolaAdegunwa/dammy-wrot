@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DammyWrot.Repository.Entity
 {
@@ -9,6 +11,8 @@ namespace DammyWrot.Repository.Entity
         {
             this.Posts = new HashSet<Post>();
         }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
         public string Name { get; set; }
         public string Token { get; set; }

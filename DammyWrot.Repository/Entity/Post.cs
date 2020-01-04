@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace DammyWrot.Repository.Entity
@@ -10,9 +12,11 @@ namespace DammyWrot.Repository.Entity
         {
             this.Comments = new HashSet<Comment>();
         }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
         public string Content { get; set; }
-        public DateTimeOffset DateCreaed { get; set; }
+        public DateTimeOffset DateCreated { get; set; }
         public long Likes { get; set; }
         public User User { get; set; }
         public ICollection<Comment> Comments { get; set; }

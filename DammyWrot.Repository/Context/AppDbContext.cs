@@ -24,7 +24,8 @@ namespace DammyWrot.Repository.Context
         {
             if (!dbContextOptionsBuilder.IsConfigured)
             {
-                dbContextOptionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["DammyWrotDB"].ConnectionString);
+                var conn = "Server=.;Database=DammyWrotDB;Trusted_Connection=True";//ConfigurationManager.ConnectionStrings["DammyWrotDB"].ConnectionString;
+                dbContextOptionsBuilder.UseSqlServer(conn);
             }
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
