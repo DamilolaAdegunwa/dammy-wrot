@@ -19,7 +19,7 @@ namespace DammyWrot.Repository.Entity
         public string Email { get; set; }
         public string Password { get; set; }
         public DateTimeOffset DateCreated { get; set; } = DateTime.Now;
-        public bool IsVerified { get; set; }
+        public bool IsVerified { get; set; } = false;
         public ICollection<Post> Posts { get; set; }
     }
 }

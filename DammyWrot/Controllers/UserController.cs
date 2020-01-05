@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using DammyWrot.Service.Authentication;
 
 namespace DammyWrot.Controllers
 {
@@ -21,22 +22,25 @@ namespace DammyWrot.Controllers
         private readonly IUserService _userService;
         private readonly ILogger<UserController> _logger;
         private readonly AppSettings _appSettings;
+        private readonly IUserValidationService _userValidationService;
         #endregion
         #region constructor
-        public UserController(IUserService userService, ILogger<UserController> logger, IOptions<AppSettings> options)
+        public UserController(IUserService userService, ILogger<UserController> logger, IOptions<AppSettings> options, IUserValidationService userValidationService)
         {
             _userService = userService;
             _logger = logger;
             _appSettings = options.Value;
+            _userValidationService = userValidationService;
         }
         #endregion
         #region endpoint methods
         [HttpPost("[action]")]
+        [Produces(typeof(User))]
         public async Task<IActionResult> RegisterUser([FromBody] User model)
         {
             try
             {
-                model.Id = 0;
+                model.Id = 0;model.Email = model.Email?.Trim().ToLower();model.Name?.Trim();
                 //validate email regex, required and uniqueness
                 var wellFormattedEmail = Regex.IsMatch(model.Email, @"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$");
                 if (!wellFormattedEmail) return BadRequest("Please input a valid email!!");
@@ -54,8 +58,17 @@ namespace DammyWrot.Controllers
                 //Create a new user in the database
                 _userService.Create(model);
 
+                //Get User
+                var GetUser = (await _userService.Get(u => u.Email == model.Email)).FirstOrDefault();
 
-                return await Task.FromResult(Ok("success connecting!!"));
+                //Get token
+                var token = _userValidationService.GetToken(GetUser.Id);//I should really do something if the token is null
+
+                //assign token to user and update
+                GetUser.Token = await token;
+                _userService.Update(GetUser);
+
+                return await Task.FromResult(Ok(GetUser));
             }
             catch (Exception ex)
             {

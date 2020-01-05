@@ -53,7 +53,7 @@ namespace DammyWrot.Service.Authentication
             }
             catch (Exception ex)
             {
-                throw ex;
+                return null;
             }
         }
         public async Task<string> GetToken(string email, string password)
@@ -69,7 +69,7 @@ namespace DammyWrot.Service.Authentication
             }
             catch (Exception ex)
             {
-                throw ex;
+                return null;
             }
         }
         public async Task<string> GetToken(User user)
@@ -85,7 +85,7 @@ namespace DammyWrot.Service.Authentication
             }
             catch (Exception ex)
             {
-                throw ex;
+                return null;
             }
         }
     }

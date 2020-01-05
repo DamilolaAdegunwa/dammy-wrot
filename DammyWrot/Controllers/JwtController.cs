@@ -28,6 +28,7 @@ namespace DammyWrot.Controllers
         }
         [AllowAnonymous]
         [HttpPost("token")]
+        [Produces(typeof(string))]
         public async Task<IActionResult> Authenticate([FromBody]User model)
         {
             var token = this._uservalidationService.GetToken(model.Email, model.Password);
@@ -35,7 +36,7 @@ namespace DammyWrot.Controllers
             {
                 return BadRequest();
             }
-            return Ok(token);
+            return Ok(_ = (await token));
         }
     }
 }
