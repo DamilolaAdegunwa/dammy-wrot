@@ -78,12 +78,39 @@ namespace DammyWrot.Controllers
 
         [HttpPost("[action]")]
         [Produces(typeof(User))]
-        public async Task<IActionResult> SignIn(string email, string password)
+        public async Task<IActionResult> SignInQueryParams(string email, string password)
         {
             try
             {
                 var user = (await _userService.Get(u => u.Email?.ToLower().Trim() == email.ToLower().Trim() && u.Password == password)).FirstOrDefault();
                 if(user != null)
+                {
+                    //Get token
+                    var token = await _userValidationService.GetToken(user.Id);
+                    if (token == null) return BadRequest();
+
+                    //assign token to user and update
+                    user.Token = token;
+                    await _userService.Update(user);
+                    return Ok(user);
+                }
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"{ex.Message} :: {ex}");
+                return BadRequest();
+            }
+        }
+
+        [HttpPost("[action]")]
+        [Produces(typeof(User))]
+        public async Task<IActionResult> SignIn([FromBody]User model)
+        {
+            try
+            {
+                var user = (await _userService.Get(u => u.Email?.ToLower().Trim() == model.Email.ToLower().Trim() && u.Password == model.Password)).FirstOrDefault();
+                if (user != null)
                 {
                     //Get token
                     var token = await _userValidationService.GetToken(user.Id);
