@@ -16,6 +16,7 @@ namespace DammyWrot.Service
             services.AddTransient<IUserValidationService,UserValidationService>();
             services.AddTransient<IDataProtection, DataProtection>();
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IPostService, PostService>();
 
             //add from repository
             services.AddDammyWrotRepository();

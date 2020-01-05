@@ -11,5 +11,6 @@ namespace DammyWrot.Service.Authentication
         public Task<string> GetToken(long Id);
         public Task<string> GetToken(string email, string password);
         public Task<string> GetToken(User user);
+        public Task SendConfirmationEmail(User user);
     }
 }

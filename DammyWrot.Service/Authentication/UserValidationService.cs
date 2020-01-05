@@ -11,6 +11,8 @@ using DammyWrot.Repository.Entity;
 using DammyWrot.Service.EntityServices;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using MailKit.Net.Smtp;
+using MimeKit;
 
 namespace DammyWrot.Service.Authentication
 {
@@ -86,6 +88,38 @@ namespace DammyWrot.Service.Authentication
             catch (Exception ex)
             {
                 return null;
+            }
+        }
+        public async Task SendConfirmationEmail(User user)
+        {
+            try
+            {
+                MimeMessage message = new MimeMessage();
+                MailboxAddress from = new MailboxAddress("DammyWrot Support Team", "damee1993@gmail.com");
+                message.From.Add(from);
+
+                MailboxAddress to = new MailboxAddress(user.Name, user.Email);
+                message.To.Add(to);
+
+                message.Subject = "DammyWrot Email Comfirmation Mail";
+
+                BodyBuilder bodyBuilder = new BodyBuilder();
+                bodyBuilder.HtmlBody = $"<h3>Hi {user.Name}</h3>";
+                bodyBuilder.HtmlBody += $"<p>You just registered on DammyWrot. Please click on the <mark><a href=''>confirmation link</a></mark> to verify that you are the one that did the registration.</p>";
+                bodyBuilder.Attachments.Add("https://cvbay.co.uk/wp-content/uploads/2017/03/dummy-image.jpg");
+                message.Body = bodyBuilder.ToMessageBody();
+
+                SmtpClient client = new SmtpClient();
+                client.Connect("smtp.gmail.com", 465, true);
+                client.Authenticate("damee1993@gmail.com", "Damilola@123");
+
+                client.Send(message);
+                client.Disconnect(true);
+                client.Dispose();
+            }
+            catch (Exception ex)
+            {
+                //throw ex;
             }
         }
     }

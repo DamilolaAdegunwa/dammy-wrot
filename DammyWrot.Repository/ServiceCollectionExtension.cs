@@ -14,6 +14,7 @@ namespace DammyWrot.Repository
         {
             services.AddTransient<IBaseRepository,BaseRepository>();
             services.AddTransient<IUserRepository,UserRepository>();
+            services.AddTransient<IPostRepository,PostRepository>();
 
             //add from core
             services.AddDammyWrotCore();

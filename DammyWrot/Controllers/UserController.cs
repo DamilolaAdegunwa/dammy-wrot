@@ -48,7 +48,7 @@ namespace DammyWrot.Controllers
                 if ((await _userService.Get(u => u.Email == model.Email)).Count() > 0) return BadRequest("User with this email already exist. If this is you, login instead!");
 
                 //validate password for regex and required
-                var wellFormattedPassword = Regex.IsMatch(model.Password, @"(?=^.{8,15}$)(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?!.*\s).*$");
+                var wellFormattedPassword = Regex.IsMatch(model.Password, @"(?=^.{8,25}$)(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?!.*\s).*$");
                 if (!wellFormattedPassword) return BadRequest("Invalid password format!!");
                 if (string.IsNullOrEmpty(model.Password?.Trim())) return BadRequest("Password is required!");
 
@@ -56,18 +56,27 @@ namespace DammyWrot.Controllers
                 if (string.IsNullOrEmpty(model.Name?.Trim()) || model.Name.Length <= 2) return BadRequest("Invalid Name given!");
 
                 //Create a new user in the database
-                _userService.Create(model);
+                await _userService.Create(model);
 
                 //Get User
-                var GetUser = (await _userService.Get(u => u.Email == model.Email)).FirstOrDefault();
+                var GetUser = (await _userService.Get(u => u.Email.ToLower() == model.Email.ToLower())).FirstOrDefault();
+                if (GetUser == null) return BadRequest();
 
                 //Get token
-                var token = _userValidationService.GetToken(GetUser.Id);//I should really do something if the token is null
+                var token = await _userValidationService.GetToken(GetUser.Id);
+                if (token == null) return BadRequest();
 
                 //assign token to user and update
-                GetUser.Token = await token;
-                _userService.Update(GetUser);
+                GetUser.Token = token;
+                GetUser.IsVerified = true;//this would be updated to use email verification;
+                await _userService.Update(GetUser);
 
+                try
+                {
+                    await _userValidationService.SendConfirmationEmail(GetUser);
+                }
+                catch (Exception){}
+                
                 return await Task.FromResult(Ok(GetUser));
             }
             catch (Exception ex)
@@ -75,6 +84,12 @@ namespace DammyWrot.Controllers
                 _logger.LogError($"{ex.Message} :: {ex}");
                 return BadRequest(ex);
             }
+        }
+
+        [HttpPut("[action]/{Id}")]
+        public async Task<IActionResult> CreateOrUpdateUserProfile([FromBody] User model, long userId)
+        {
+            return default;
         }
         #endregion
     }
