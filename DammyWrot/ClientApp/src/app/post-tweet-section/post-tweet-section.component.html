@@ -1,11 +1,12 @@
 <div class="card p-3">
-    <form>
+    <form class="form">
         <div class="shadow p-4 mb-4 bg-white">
-            <textarea placeholder="Post and share your thoughts..." class="form-control">
+            <textarea placeholder="Post and share your thoughts..." class="form-control" [(ngModel)]="post.content" name="content">
 
             </textarea>
         </div>
-        <input type="submit" class="btn btn-info" value="Post"/>
+        <!-- <input type="submit" class="btn btn-info" value="Post"/> -->
+        <button type="button" class="btn btn-info float-right" (click)="Submit()">Post</button>
     </form>
     
 </div>

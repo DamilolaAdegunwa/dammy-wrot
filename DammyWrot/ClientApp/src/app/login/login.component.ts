@@ -24,8 +24,6 @@ export class LoginComponent implements OnInit {
       res => {
         localStorage.setItem('token', res.token)
         this.stateService.User = res;
-        console.log("from the login", this.stateService.User);
-        debugger;
         this._router.navigate(['/home'])
       },
       err => console.log(err)

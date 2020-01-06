@@ -17,9 +17,6 @@ export class AuthService {
   }
 
   loginUser(user) {
-      console.log("*******************************");
-      console.log(user);
-      debugger;
     return this.http.post<User>(this._loginUrl, user)
   }
 

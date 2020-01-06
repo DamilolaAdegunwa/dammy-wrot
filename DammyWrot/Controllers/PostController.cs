@@ -41,10 +41,15 @@ namespace DammyWrot.Controllers
             try
             {
                 model.Id=0;
-                var post = _postService.Create(model);
-                return Ok();
+                var token = (string)HttpContext.Request.Headers["Authorization"];
+                if (token == null) return BadRequest();
+                var user = (await _userService.Get(u => u.Token == token)).FirstOrDefault();
+                if (user == null) return BadRequest();
+                model.User = user;
+                await _postService.Create(model);
+                return Ok("posted!!");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return BadRequest();
             }
@@ -76,7 +81,7 @@ namespace DammyWrot.Controllers
                 return BadRequest();
             }
         }
-        [HttpPost]
+        [HttpPost("[action]")]
         public async Task<IActionResult> Delete([FromBody]Post model)//delete
         {
             try

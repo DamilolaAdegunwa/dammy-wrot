@@ -5,7 +5,10 @@ import { Injectable } from '@angular/core';
 })
 export class StateService {
   User: User;
-  constructor() { }
+  BaseUrl: string;
+  constructor() {
+    this.BaseUrl = "http://localhost:64892"; 
+   }
 }
 
 export interface User
@@ -31,10 +34,10 @@ export interface User
 
 export interface Post
 {
-    Id: number;
-    Content: string;
-    DateCreated: Date | string;
-    Likes: number;
-    User: User;
-    Comments: Comment[];
+    id: number;
+    content: string;
+    dateCreated: Date | string;
+    likes: number;
+    user: User;
+    comments: Comment[];
 }
