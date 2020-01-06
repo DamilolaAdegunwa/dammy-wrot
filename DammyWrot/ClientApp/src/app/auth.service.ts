@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Router } from '@angular/router'
+import { User } from './_services/state.service';
 
 @Injectable()
 export class AuthService {
@@ -16,7 +17,10 @@ export class AuthService {
   }
 
   loginUser(user) {
-    return this.http.post<any>(this._loginUrl, user)
+      console.log("*******************************");
+      console.log(user);
+      debugger;
+    return this.http.post<User>(this._loginUrl, user)
   }
 
   logoutUser() {

@@ -60,6 +60,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule} from '@angular/material'
 import { AuthService } from './auth.service';
 import { LoginComponent } from './login/login.component';
+import { StateService } from './_services/state.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -164,7 +165,7 @@ import { LoginComponent } from './login/login.component';
       BrowserAnimationsModule,
       MatButtonModule
   ],
-  providers: [AuthService, AuthGuard],
+  providers: [AuthService, AuthGuard, StateService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
