@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PostedTweetSectionComponent implements OnInit {
 
+  posts: [];
+
   constructor() { }
 
   ngOnInit() {

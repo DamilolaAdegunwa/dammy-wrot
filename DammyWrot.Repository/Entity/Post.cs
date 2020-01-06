@@ -16,7 +16,7 @@ namespace DammyWrot.Repository.Entity
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
         public string Content { get; set; }
-        public DateTimeOffset DateCreated { get; set; }
+        public DateTimeOffset DateCreated { get; set; } = DateTime.Now;
         public long Likes { get; set; }
         public User User { get; set; }
         public ICollection<Comment> Comments { get; set; }

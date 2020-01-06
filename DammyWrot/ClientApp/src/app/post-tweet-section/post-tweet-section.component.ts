@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Post } from '../_services/state.service';
 
 @Component({
   selector: 'app-post-tweet-section',
@@ -6,10 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./post-tweet-section.component.css']
 })
 export class PostTweetSectionComponent implements OnInit {
-
+  post: Post;
   constructor() { }
 
   ngOnInit() {
+    
+  }
+
+  OnSubmit(){
+
   }
 
 }

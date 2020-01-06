@@ -28,3 +28,13 @@ export interface User
     isVerified: boolean;
     //posts: Post[];
 }
+
+export interface Post
+{
+    Id: number;
+    Content: string;
+    DateCreated: Date | string;
+    Likes: number;
+    User: User;
+    Comments: Comment[];
+}
