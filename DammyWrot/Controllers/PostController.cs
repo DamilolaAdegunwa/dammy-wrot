@@ -45,7 +45,7 @@ namespace DammyWrot.Controllers
                 if (token == null) return BadRequest();
                 var user = (await _userService.Get(u => u.Token == token)).FirstOrDefault();
                 if (user == null) return BadRequest();
-                model.User = user;
+                model.UserId = user.Id;
                 await _postService.Create(model);
                 return Ok("posted!!");
             }

@@ -19,6 +19,7 @@ namespace DammyWrot.Repository.Entity
         public DateTimeOffset DateCreated { get; set; } = DateTime.Now;
         public long Likes { get; set; }
         public User User { get; set; }
+        public long UserId { get; set; }
         public ICollection<Comment> Comments { get; set; }
     }
 }
