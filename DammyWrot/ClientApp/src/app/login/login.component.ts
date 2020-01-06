@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
     this._auth.loginUser(this.loginUserData)
     .subscribe(
       res => {
-        localStorage.setItem('token', res.Token)
+        localStorage.setItem('token', res.token)
         this.stateService.User = res;
         console.log("from the login", this.stateService.User);
         debugger;

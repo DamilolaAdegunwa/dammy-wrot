@@ -15,9 +15,9 @@ export class NavMenuComponent implements OnInit {
   }
 
   ngOnInit(){
-    console.log("From nav bar .ts file!! :: Name ",this.stateService.User.Name);
+    console.log("From nav bar .ts file!! :: Name ",this.stateService.User.name);
     debugger;
-    this.MyName = this.stateService.User.Name;
+    this.MyName = this.stateService.User.name;
     console.log(this.MyName);
   }
 
