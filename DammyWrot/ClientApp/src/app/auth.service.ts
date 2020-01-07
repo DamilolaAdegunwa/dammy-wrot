@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http'
-import { Router } from '@angular/router'
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { User } from './_services/state.service';
 
 @Injectable()
@@ -22,7 +22,7 @@ export class AuthService {
 
   logoutUser() {
     localStorage.removeItem('token')
-    this._router.navigate(['/home'])
+    this._router.navigate(['/login'])
   }
 
   getToken() {

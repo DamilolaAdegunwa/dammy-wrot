@@ -7,6 +7,7 @@ import {HomeComponent } from './home/home.component';
 // import { SpecialEventsComponent } from './special-events/special-events.component';
 import { AuthGuard } from './auth.guard';
 import { LoginComponent } from './login/login.component';
+import { SignupComponent } from './signup/signup.component';
 
 const routes: Routes = [
   {
@@ -24,6 +25,10 @@ const routes: Routes = [
     path: 'login',
     component: LoginComponent
   },
+  {
+    path: 'signup',
+    component: SignupComponent
+  }
 //   {
 //     path: 'special',
 //     canActivate: [AuthGuard],

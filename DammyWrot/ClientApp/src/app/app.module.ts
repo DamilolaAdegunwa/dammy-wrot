@@ -61,6 +61,7 @@ import {MatButtonModule} from '@angular/material'
 import { AuthService } from './auth.service';
 import { LoginComponent } from './login/login.component';
 import { StateService } from './_services/state.service';
+import { SignupComponent } from './signup/signup.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -113,7 +114,8 @@ import { StateService } from './_services/state.service';
         BusinessServicesSectionComponent,
         GetAppSectionComponent,
         MoreSectionComponent,
-        LoginComponent
+        LoginComponent,
+        SignupComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -161,6 +163,7 @@ import { StateService } from './_services/state.service';
         { path: 'business-services', component: BusinessServicesSectionComponent},
         { path: 'get-app', component: GetAppSectionComponent},
         { path: 'more', component: MoreSectionComponent},
+
     ]),
       BrowserAnimationsModule,
       MatButtonModule

@@ -15,6 +15,7 @@ export class PostedTweetSectionComponent implements OnInit {
   ngOnInit() {
     //this.GetAllPost();
     this._post.GetAllPostData();
+    this.posts = [];
     this.posts = this._post.posts;
   }
   // GetAllPost(){

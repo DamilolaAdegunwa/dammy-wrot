@@ -10,6 +10,6 @@ export class AppComponent implements OnInit {
 
   }
   ngOnInit(){
-    localStorage.removeItem('token');
+    //localStorage.removeItem('token');
   }
 }
