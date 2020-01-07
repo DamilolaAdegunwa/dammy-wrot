@@ -9,16 +9,13 @@ import { StateService, User } from '../_services/state.service';
 export class NavMenuComponent implements OnInit {
   isExpanded = false;
   @Input() User: User;
-  @Input() MyName: string = "Westley Smith M";
+  @Input() MyName: string = "";
   constructor(private stateService: StateService) {
 
   }
 
   ngOnInit(){
-    console.log("From nav bar .ts file!! :: Name ",this.stateService.User.name);
-    debugger;
     this.MyName = this.stateService.User.name;
-    console.log(this.MyName);
   }
 
   collapse() {

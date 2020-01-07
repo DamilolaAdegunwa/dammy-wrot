@@ -1,8 +1,9 @@
-﻿using DammyWrot.Repository.Context;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using System.Linq;
+using DammyWrot.Repository.Context;
+using System.Collections;
 namespace DammyWrot.Repository.PersistenceLogic.Base
 {
     public class BaseRepository : IBaseRepository

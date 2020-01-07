@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { PostService } from '../_services/post.service';
+import { Post } from '../_services/state.service';
 
 @Component({
   selector: 'app-posted-tweet-section',
@@ -7,12 +9,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PostedTweetSectionComponent implements OnInit {
 
-  posts: [];
-
-  constructor() { }
+  @Input() posts: Post[];
+  constructor(private _post: PostService) { }
 
   ngOnInit() {
+    //this.GetAllPost();
+    this._post.GetAllPostData();
+    this.posts = this._post.posts;
   }
+  // GetAllPost(){
+  //   this._post.GetAllPost().subscribe(
+  //     res=>{
+  //       this.posts = res;
+  //       console.log("res:: ",res, "posts", this.posts)
+  //       debugger;
+  //     },
+  //     err=>{
 
-  
+  //     }
+  //   )
+  // }
 }

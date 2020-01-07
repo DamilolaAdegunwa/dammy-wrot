@@ -67,6 +67,25 @@ namespace DammyWrot.Controllers
                 return BadRequest();
             }
         }
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetAll()//read
+        {
+            try
+            {
+                var posts = (await _postService.Get());
+                foreach(var post in posts)
+                {
+                    var u = (await _userService.Get(post.UserId));
+                    posts.Where(p => p.Id == post.Id).FirstOrDefault().User = u;
+                }
+                return Ok(posts);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"{ex.Message} :: {ex}");
+                return BadRequest();
+            }
+        }
         [HttpPut("[action]")]
         public async Task<IActionResult> Edit([FromBody]Post model)//update
         {

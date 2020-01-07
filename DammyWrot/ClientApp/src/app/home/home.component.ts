@@ -11,9 +11,6 @@ export class HomeComponent implements OnInit {
 
   }
   ngOnInit() {
-    console.log("***from home comp***");
-    console.log(this.stateService.User);
-    debugger;
     this.User = this.stateService.User;
   }
 }

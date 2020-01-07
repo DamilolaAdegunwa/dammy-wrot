@@ -1,5 +1,25 @@
-<div class="card">
-    <div *ngFor="let posts of post">
-        
+<div class="card bg-default p-4 m-4">
+    <div *ngFor="let post of posts">
+        <div class="shadow-sm p-4 mb-4 bg-white">
+            <div class="row" style="max-height: 100px;">
+                <div class="col-md-1">
+                    <img src="http://localhost:64892/Asset/images/dummy.jpg" width="100%"/>
+                </div>
+                <div class="col-md-11">
+                    {{post.user.name}}
+                </div>
+            </div>
+            <div class="row">
+                {{post.content}}
+            </div>
+            <div class="row"> 
+                <span title="Like"></span>
+                <span title="Share"></span>
+                <span title="Re-Post"></span>
+                <span title="Comment"></span>
+                <span title="Save"></span>
+                <span title=""></span>
+            </div>
+        </div>
     </div>
 </div>

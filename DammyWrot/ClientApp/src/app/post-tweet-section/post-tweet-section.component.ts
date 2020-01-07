@@ -17,13 +17,11 @@ export class PostTweetSectionComponent implements OnInit {
   Submit(){
     this._post.SavePost(this.post).subscribe(
       res=>{
-        console.log(res);
-        debugger;
+        this._post.GetAllPostData();
       },
       err=>{
 
       }
     )
   }
-
 }
